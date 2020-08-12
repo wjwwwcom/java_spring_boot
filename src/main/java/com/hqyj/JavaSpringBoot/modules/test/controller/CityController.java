@@ -42,7 +42,7 @@ public class CityController {
     }
 
     /**
-     * 模糊查询
+     * 脚本查询
      * url:127.0.0.1/cpi/cities --- post
      * json语句==》{"currentPage":"1","pageSize":"7","keyWord":"Z","orderBy":"city_name","sort":"desc"}
      */
