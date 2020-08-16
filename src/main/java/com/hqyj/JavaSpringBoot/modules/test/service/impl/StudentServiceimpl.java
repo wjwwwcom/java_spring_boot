@@ -60,10 +60,10 @@ public class StudentServiceimpl implements StudentService {
     public List<Student> getByStudentName(String studentName , int cardId) {
 
         if (cardId>0){
-            return Optional.ofNullable(studentRepository.getStudentsByColumns(String.format("%s%S%s", "%", studentName, "%"),cardId)).orElse(Collections.emptyList());
+            return Optional.ofNullable(studentRepository.getStudentsByColumns(String.format("%s%s%s", "%", studentName, "%"),cardId)).orElse(Collections.emptyList());
         }else {
             //return Optional.ofNullable(studentRepository.findByStudentName(studentName)).orElse(Collections.emptyList());
-            return Optional.ofNullable(studentRepository.findByStudentNameLike(String.format("%s%S%s", "%", studentName, "%"))).orElse(Collections.emptyList());
+            return Optional.ofNullable(studentRepository.findByStudentNameLike(String.format("%s%s%s", "%", studentName, "%"))).orElse(Collections.emptyList());
         }
     }
 

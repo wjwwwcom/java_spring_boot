@@ -33,4 +33,13 @@ public class CountryController {
     public Country getCountryByCountryName(@RequestParam String countryName) {
         return countryService.getCountryByCountryName(countryName);
     }
+
+    /**
+     * redis通过Id查找国家
+     *url:127.0.0.1/cpi/redis/522 ---- get
+     */
+    @GetMapping("/redis/{countryId}")
+    public Country getCountryByRedis(@PathVariable int countryId) {
+        return countryService.getCountryByRedis(countryId);
+    }
 }
