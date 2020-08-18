@@ -6,14 +6,23 @@ import com.hqyj.JavaSpringBoot.modules.test.entity.Country;
 import com.hqyj.JavaSpringBoot.modules.test.service.CityService;
 import com.hqyj.JavaSpringBoot.modules.test.service.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.data.jpa.domain.JpaSort;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,6 +33,74 @@ public class thymeleafTest {
     private CityService cityService;
     @Autowired
     private CountryService countryService;
+
+
+    @GetMapping("/downloadfile")
+    public ResponseEntity<Resource> downloadfile(@RequestParam String fileName,RedirectAttributes red){
+      Resource resource= null;
+      try {
+          resource=new UrlResource(Paths.get("D:\\FileTest\\"+fileName).toUri());
+           if (resource.exists() && resource.isReadable()){
+               return ResponseEntity.ok()
+                       .header(HttpHeaders.CONTENT_TYPE,"application/octet-stream")
+                       .header(HttpHeaders.CONTENT_DISPOSITION,String.format("attachment; filename=\"%s\"",resource.getFilename()))
+                       .body(resource);
+           }
+      } catch (MalformedURLException e) {
+          e.printStackTrace();
+      }
+      return null;
+    }
+
+    /**
+     * 127.0.0.1/pagetest/files ---- post
+     */
+    @PostMapping(value = "/files",consumes = "multipart/form-data")
+    public String uploadFiles(@RequestParam MultipartFile[] files, RedirectAttributes red){
+        boolean empty= true;
+        try {
+            for (MultipartFile file : files) {
+                if (file.isEmpty()){
+                    continue;
+                }
+                String destFilePath = "D:\\FileTest\\"+file.getOriginalFilename();
+                File destFile =new File(destFilePath);
+                file.transferTo(destFile);
+                empty=false;
+            }
+            if (empty){
+                red.addFlashAttribute("message","Please select file");
+            }else {
+                red.addFlashAttribute("message","Upload file success!");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            red.addFlashAttribute("message","Upload file failed!");
+        }
+        return "redirect:/pagetest/index";
+    }
+
+    /**
+     * 127.0.0.1/pagetest/file ---- post
+     */
+    @PostMapping(value = "/file",consumes = "multipart/form-data")
+    public String uploadFile(@RequestParam MultipartFile file, RedirectAttributes red){
+        if (file.isEmpty()) {
+            red.addFlashAttribute("message", "Please select file.");
+            return "redirect:/pagetest/index";
+        }
+        try {
+            String destFilePath = "D:\\FileTest\\"+file.getOriginalFilename();
+            File destFile =new File(destFilePath);
+            file.transferTo(destFile);
+            red.addFlashAttribute("message","Upload file success!");
+        } catch (IOException e) {
+            e.printStackTrace();
+            red.addFlashAttribute("message","Upload file failed!");
+        }
+        return "redirect:/pagetest/index";
+    }
+
 
     /*
      *thymeleaf模块化碎片化测试
