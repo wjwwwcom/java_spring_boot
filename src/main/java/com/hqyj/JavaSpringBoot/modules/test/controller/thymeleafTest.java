@@ -34,48 +34,55 @@ public class thymeleafTest {
     @Autowired
     private CountryService countryService;
 
+    /*
+     * 127.0.0.1/pagetest/indexSimple ----get
+     * */
+    @GetMapping("/indexSimple")
+    public String indexSimpleTest() {
+        return "indexSimple";
+    }
 
     @GetMapping("/downloadfile")
-    public ResponseEntity<Resource> downloadfile(@RequestParam String fileName,RedirectAttributes red){
-      Resource resource= null;
-      try {
-          resource=new UrlResource(Paths.get("D:\\FileTest\\"+fileName).toUri());
-           if (resource.exists() && resource.isReadable()){
-               return ResponseEntity.ok()
-                       .header(HttpHeaders.CONTENT_TYPE,"application/octet-stream")
-                       .header(HttpHeaders.CONTENT_DISPOSITION,String.format("attachment; filename=\"%s\"",resource.getFilename()))
-                       .body(resource);
-           }
-      } catch (MalformedURLException e) {
-          e.printStackTrace();
-      }
-      return null;
+    public ResponseEntity<Resource> downloadfile(@RequestParam String fileName, RedirectAttributes red) {
+        Resource resource = null;
+        try {
+            resource = new UrlResource(Paths.get("D:\\FileTest\\" + fileName).toUri());
+            if (resource.exists() && resource.isReadable()) {
+                return ResponseEntity.ok()
+                        .header(HttpHeaders.CONTENT_TYPE, "application/octet-stream")
+                        .header(HttpHeaders.CONTENT_DISPOSITION, String.format("attachment; filename=\"%s\"", resource.getFilename()))
+                        .body(resource);
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**
      * 127.0.0.1/pagetest/files ---- post
      */
-    @PostMapping(value = "/files",consumes = "multipart/form-data")
-    public String uploadFiles(@RequestParam MultipartFile[] files, RedirectAttributes red){
-        boolean empty= true;
+    @PostMapping(value = "/files", consumes = "multipart/form-data")
+    public String uploadFiles(@RequestParam MultipartFile[] files, RedirectAttributes red) {
+        boolean empty = true;
         try {
             for (MultipartFile file : files) {
-                if (file.isEmpty()){
+                if (file.isEmpty()) {
                     continue;
                 }
-                String destFilePath = "D:\\FileTest\\"+file.getOriginalFilename();
-                File destFile =new File(destFilePath);
+                String destFilePath = "D:\\FileTest\\" + file.getOriginalFilename();
+                File destFile = new File(destFilePath);
                 file.transferTo(destFile);
-                empty=false;
+                empty = false;
             }
-            if (empty){
-                red.addFlashAttribute("message","Please select file");
-            }else {
-                red.addFlashAttribute("message","Upload file success!");
+            if (empty) {
+                red.addFlashAttribute("message", "Please select file");
+            } else {
+                red.addFlashAttribute("message", "Upload file success!");
             }
         } catch (IOException e) {
             e.printStackTrace();
-            red.addFlashAttribute("message","Upload file failed!");
+            red.addFlashAttribute("message", "Upload file failed!");
         }
         return "redirect:/pagetest/index";
     }
@@ -83,20 +90,20 @@ public class thymeleafTest {
     /**
      * 127.0.0.1/pagetest/file ---- post
      */
-    @PostMapping(value = "/file",consumes = "multipart/form-data")
-    public String uploadFile(@RequestParam MultipartFile file, RedirectAttributes red){
+    @PostMapping(value = "/file", consumes = "multipart/form-data")
+    public String uploadFile(@RequestParam MultipartFile file, RedirectAttributes red) {
         if (file.isEmpty()) {
             red.addFlashAttribute("message", "Please select file.");
             return "redirect:/pagetest/index";
         }
         try {
-            String destFilePath = "D:\\FileTest\\"+file.getOriginalFilename();
-            File destFile =new File(destFilePath);
+            String destFilePath = "D:\\FileTest\\" + file.getOriginalFilename();
+            File destFile = new File(destFilePath);
             file.transferTo(destFile);
-            red.addFlashAttribute("message","Upload file success!");
+            red.addFlashAttribute("message", "Upload file success!");
         } catch (IOException e) {
             e.printStackTrace();
-            red.addFlashAttribute("message","Upload file failed!");
+            red.addFlashAttribute("message", "Upload file failed!");
         }
         return "redirect:/pagetest/index";
     }
@@ -104,10 +111,10 @@ public class thymeleafTest {
 
     /*
      *thymeleaf模块化碎片化测试
-    * 127.0.0.1/pagetest/index
+     * 127.0.0.1/pagetest/index
      */
     @GetMapping("/index")
-    public String indexPageTest(ModelMap map){
+    public String indexPageTest(ModelMap map) {
         int countryId = 522;
         List<City> cities = cityService.getCitiesByCountryId(countryId);
         cities = cities.stream().limit(10).collect(Collectors.toList());
@@ -126,7 +133,7 @@ public class thymeleafTest {
         map.addAttribute("country", country);
         map.addAttribute("cities", cities);
         map.addAttribute("updateCityUri", "/cpi/city");
-        map.addAttribute("template", "test/index");
+        // map.addAttribute("template", "test/index");
         return "index";
     }
 
@@ -140,10 +147,8 @@ public class thymeleafTest {
     @ServiceAnnotation("aaa")
     public String testDesc(HttpServletRequest request, @RequestParam String paramKey) {
         String paramValue = request.getParameter("paramKey");
-        return "Filter Test: one Day,Zhangsan to Lisi Say:“"+paramKey+" you mother and "+paramValue+" you daughter”";
+        return "Filter Test: one Day,Zhangsan to Lisi Say:“" + paramKey + " you mother and " + paramValue + " you daughter”";
     }
-
-
 
 
 }
