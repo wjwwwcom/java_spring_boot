@@ -27,5 +27,14 @@ public class AccountController {
         return "indexSimple";
     }
 
+    @GetMapping("/users")
+    public String usersPage() {
+        return "index";
+    }
+
+    @GetMapping("/roles")
+    public String rolesPage() {
+        return "index";
+    }
 
 }

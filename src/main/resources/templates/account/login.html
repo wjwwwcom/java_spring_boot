@@ -21,7 +21,7 @@
                            lay-skin="primary" title="30天内自动登录" >7天内自动登录
                 </div>
                 <div>
-                    <a id="loginBuuton" class="btn btn-default submit"
+                    <a id="loginButton" class="btn btn-default submit"
                        href="javascript:void(0);">登录</a>
                     <a class="reset_pass" href="#">忘记密码?</a>
                 </div>
@@ -48,21 +48,21 @@
             draw(show_num);
         });
 
-        $("#loginBuuton").bind("click", function(){
+        $("#loginButton").bind("click", function(){
             login();
         });
     });
 
     function login() {
-        var code = $(".input-val").val();
-        var num = show_num.join("");
-        if (code == "") {
-            layer.msg("请输入验证码.", {icon: 0});
-            return;
-        } else if (code != num) {
-            layer.msg("验证码错误.", {icon: 2});
-            return;
-        };
+        /*  var code = $(".input-val").val();
+          var num = show_num.join("");
+       /* if (code == "") {
+              layer.msg("请输入验证码.", {icon: 0});
+              return;
+          } else if (code != num) {
+              layer.msg("验证码错误.", {icon: 2});
+              return;
+          };*/
 
         var user = {};
         user.userName = $("[name=userName]").val();
@@ -70,7 +70,7 @@
         user.rememberMe = $("[name=rememberMe]").prop("checked")
 
         $.ajax({
-            url : "/user/login",
+            url : "/cpi/login",
             type : "post",
             contentType: "application/json",
             data : JSON.stringify(user),

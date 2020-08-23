@@ -5,15 +5,13 @@ import com.hqyj.JavaSpringBoot.modules.account.entity.User;
 import com.hqyj.JavaSpringBoot.modules.account.service.UserService;
 import com.hqyj.JavaSpringBoot.modules.common.vo.Result;
 import com.hqyj.JavaSpringBoot.modules.common.vo.SearchVo;
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/cpi")
 public class UserController {
 
     @Autowired
@@ -28,19 +26,40 @@ public class UserController {
     }
 
     /**
-     * 127.0.0.1/user/register ---- post
+     * 127.0.0.1/cpi/user ---- post
      */
-    @PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/user", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Result<User> insertUser(@RequestBody User user) {
         return userService.insertUser(user);
     }
 
     /**
-     * 127.0.0.1/api/users ---- post
+     * /cpi/users ---- post
      * {"currentPage":"1","pageSize":"4","keyWord":"zh"}
      */
     @PostMapping(value = "/users", consumes = MediaType.APPLICATION_JSON_VALUE)
     public PageInfo<User> getUsersBySearchVo(@RequestBody SearchVo searchVo) {
         return userService.getUsersBySearchVo(searchVo);
+    }
+
+    /*
+     * /cpi/user ---put
+     * */
+    @PutMapping(value = "/user",consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Result<User> updateUser(@RequestBody User user){
+        return userService.updateUser(user);
+    }
+
+      /*
+      * /cpi/user/0 ---delete
+      * */
+    @DeleteMapping("/user/{userId}")
+    public Result<Object> deleteUserByUserId(@PathVariable int userId){
+        return userService.deleteUserByUserId(userId);
+    }
+
+    @GetMapping("/user/{userId}")
+    public User getUserByUserId(@PathVariable int userId) {
+        return userService.getUserByUserId(userId);
     }
 }
