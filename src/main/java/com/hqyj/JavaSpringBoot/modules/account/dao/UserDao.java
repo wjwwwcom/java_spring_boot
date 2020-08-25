@@ -12,6 +12,7 @@ import java.util.List;
 public interface UserDao {
 
     @Select("select * from user where user_name = #{userName}")
+    @ResultMap(value = "userResult")
     User getUserByUserName(String userName);
 
     @Insert("insert into user (user_name, password, user_img, create_date) " +

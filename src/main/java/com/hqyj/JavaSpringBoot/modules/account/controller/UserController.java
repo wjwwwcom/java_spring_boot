@@ -6,8 +6,10 @@ import com.hqyj.JavaSpringBoot.modules.account.service.UserService;
 import com.hqyj.JavaSpringBoot.modules.common.vo.Result;
 import com.hqyj.JavaSpringBoot.modules.common.vo.SearchVo;
 import org.apache.ibatis.annotations.Delete;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,8 +26,8 @@ public class UserController {
      * /user/login ---- post
      */
     @PostMapping(value = "/login",consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Result<User> login(@RequestBody User user, HttpServletRequest request){
-        return userService.login(user,request);
+    public Result<User> login(@RequestBody User user){
+        return userService.login(user);
     }
 
     /**
@@ -57,6 +59,7 @@ public class UserController {
       * /api/user/0 ---delete
       * */
     @DeleteMapping("/user/{userId}")
+    @RequiresPermissions(value = "/api/user")
     public Result<Object> deleteUserByUserId(@PathVariable int userId){
         return userService.deleteUserByUserId(userId);
     }
@@ -81,4 +84,5 @@ public class UserController {
     public Result<User> updateUserProfile(@RequestBody User user) {
         return userService.updateUserProfile(user);
     }
+
 }

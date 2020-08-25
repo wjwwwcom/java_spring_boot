@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public interface UserService {
 
-    Result<User> login(User user, HttpServletRequest request);
+    Result<User> login(User user);
 
     Result<User> insertUser(User user);
 
@@ -25,4 +25,8 @@ public interface UserService {
     Result<String> uploadUserImg(MultipartFile file);
 
     Result<User> updateUserProfile(User user);
+
+    User getUserByUserName(String userName);
+
+    void Logout();
 }

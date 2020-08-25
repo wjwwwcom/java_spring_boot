@@ -11,14 +11,15 @@ import com.hqyj.JavaSpringBoot.modules.account.service.UserService;
 import com.hqyj.JavaSpringBoot.modules.common.vo.Result;
 import com.hqyj.JavaSpringBoot.modules.common.vo.SearchVo;
 import com.hqyj.JavaSpringBoot.utils.MD5Util;
-import com.sun.deploy.net.HttpRequest;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.client.support.HttpRequestWrapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -37,16 +38,25 @@ public class UserServiceimpl implements UserService {
     private ResourceConfigBean resourceConfigBean;
 
     @Override
-    public Result<User> login(User user, HttpServletRequest request) {
-        User userTemp = userDao.getUserByUserName(user.getUserName());
-        if (userTemp != null &&
-                userTemp.getPassword().equals(MD5Util.getMD5(user.getPassword()))) {
-                 request.getSession().setAttribute("userId",userTemp.getUserId());
-            System.out.println("地方h大家覅***"+userTemp.getUserId());
-            return new Result<>(Result.ResultStatus.SUCCESS.status, "Success.", userTemp);
+    public Result<User> login(User user) {
+        Subject subject = SecurityUtils.getSubject();
+        //创建令牌对象保存输入信息
+        UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(
+                user.getUserName(),MD5Util.getMD5(user.getPassword()));
+        usernamePasswordToken.setRememberMe(user.getRememberMe());
+        try {
+            subject.login(usernamePasswordToken);
+            subject.checkRoles();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result<User>(Result.ResultStatus.FAILD.status,
+                    "UserName or password is error.");
         }
-        return new Result<User>(Result.ResultStatus.FAILD.status,
-                "UserName or password is error.");
+        //session保存账户信息
+        Session session = subject.getSession();
+        session.setAttribute("user", (User)subject.getPrincipal());
+        return new Result<User>(Result.ResultStatus.SUCCESS.status,
+                "Login success.");
     }
 
     @Override
@@ -152,5 +162,18 @@ public class UserServiceimpl implements UserService {
         userDao.updateUser(user);
 
         return new Result<User>(Result.ResultStatus.SUCCESS.status, "Edit success.", user);
+    }
+
+    @Override
+    public User getUserByUserName(String userName) {
+        return userDao.getUserByUserName(userName);
+    }
+
+    @Override
+    public void Logout() {
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
+        Session session = subject.getSession();
+        session.setAttribute("user","");
     }
 }

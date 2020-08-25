@@ -303,6 +303,7 @@
                                             anderson artisan four loko farm-to-table craft beer twee. Qui
                                             photo booth letterpress, commodo enim craft beer mlkshk</p>
                                     </div>
+                                    <input type="text" value="${user}">
                                 </div>
                             </div>
                         </div>
@@ -331,7 +332,8 @@
 
         initFileInput();
 
-        initUserProfile();
+        initUserProfile($("#UserId").val());
+
         $("#editProfile").bind("click", function(){
             editProfile();
         });
