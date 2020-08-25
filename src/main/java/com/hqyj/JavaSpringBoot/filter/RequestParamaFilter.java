@@ -12,12 +12,12 @@ import java.io.IOException;
 public class RequestParamaFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        System.out.println("Im init方法");
+//        System.out.println("Im init方法");
     }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
-        System.out.println("Im dofilter方法");
+//        System.out.println("Im dofilter方法");
        HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletRequestWrapper wrapper = new HttpServletRequestWrapper(httpRequest){
             @Override
@@ -46,7 +46,7 @@ public class RequestParamaFilter implements Filter {
 
     @Override
     public void destroy() {
-        System.out.println("Im destroy方法");
+//        System.out.println("Im destroy方法");
 
     }
 }

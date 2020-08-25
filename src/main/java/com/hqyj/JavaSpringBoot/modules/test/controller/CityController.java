@@ -15,7 +15,7 @@ import java.util.List;
  * City控制类
  */
 @RestController
-@RequestMapping("/cpi")
+@RequestMapping("/api")
 public class CityController {
 
     @Autowired

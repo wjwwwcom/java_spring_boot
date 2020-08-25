@@ -46,7 +46,7 @@ public class thymeleafTest {
     public ResponseEntity<Resource> downloadfile(@RequestParam String fileName, RedirectAttributes red) {
         Resource resource = null;
         try {
-            resource = new UrlResource(Paths.get("D:\\FileTest\\" + fileName).toUri());
+            resource = new UrlResource(Paths.get("D:\\upload\\" + fileName).toUri());
             if (resource.exists() && resource.isReadable()) {
                 return ResponseEntity.ok()
                         .header(HttpHeaders.CONTENT_TYPE, "application/octet-stream")

@@ -27,6 +27,11 @@ public class AccountController {
         return "indexSimple";
     }
 
+    @GetMapping("/profile")
+    public String profilePage() {
+        return "index";
+    }
+
     @GetMapping("/users")
     public String usersPage() {
         return "index";
@@ -34,6 +39,12 @@ public class AccountController {
 
     @GetMapping("/roles")
     public String rolesPage() {
+        return "index";
+    }
+
+
+    @GetMapping("/resources")
+    public String resourcesPage() {
         return "index";
     }
 

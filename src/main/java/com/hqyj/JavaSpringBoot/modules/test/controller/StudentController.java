@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/cpi")
+@RequestMapping("/api")
 public class StudentController {
     @Autowired
     private StudentService studentService;

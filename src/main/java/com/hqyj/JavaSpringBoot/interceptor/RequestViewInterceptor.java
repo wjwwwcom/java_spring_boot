@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 public class RequestViewInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        System.out.println("==== Pre interceptor ====");
+//        System.out.println("==== Pre interceptor ====");
         return HandlerInterceptor.super.preHandle(request, response, handler);
     }
 
@@ -20,7 +20,7 @@ public class RequestViewInterceptor implements HandlerInterceptor {
                            HttpServletResponse response,
                            Object handler,
                            ModelAndView modelAndView) throws Exception {
-        System.out.println("==== Post interceptor ====");
+//        System.out.println("==== Post interceptor ====");
 
         if (modelAndView == null || modelAndView.getViewName().startsWith("redirect")) {
             return;
@@ -41,7 +41,7 @@ public class RequestViewInterceptor implements HandlerInterceptor {
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-        System.out.println("==== After interceptor ====");
+//        System.out.println("==== After interceptor ====");
         HandlerInterceptor.super.preHandle(request, response, handler);
     }
 }

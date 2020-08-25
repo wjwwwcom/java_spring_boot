@@ -131,7 +131,7 @@
                 searchVo.keyWord = data.search.value;
 
                 $.ajax({
-                    url: "/cpi/roles",
+                    url: "/api/roles",
                     type: "post",
                     contentType: "application/json",
                     data: JSON.stringify(searchVo),
@@ -199,7 +199,7 @@
         var role = {};
         role.roleName = $("#roleNameForAddPage").val();
         $.ajax({
-            url: "/cpi/role",
+            url: "/api/role",
             type: "post",
             contentType: "application/json",
             data: JSON.stringify(role),
@@ -218,7 +218,7 @@
 
     function init2EditModal(roleId) {
         $.ajax({
-            url: "/cpi/role/" + roleId,
+            url: "/api/role/" + roleId,
             type: "get",
             success: function (rs) {
                 $("#roleIdForEditPage").val(rs.roleId);
@@ -235,7 +235,7 @@
         role.roleId = $("#roleIdForEditPage").val();
         role.roleName = $("#roleNameForEditPage").val();
         $.ajax({
-            url: "/cpi/role",
+            url: "/api/role",
             type: "put",
             contentType: "application/json",
             data: JSON.stringify(role),
@@ -256,7 +256,7 @@
         bootbox.confirm("Are you sure?", function (result) {
             if (result) {
                 $.ajax({
-                    url: "/cpi/role/" + roleId,
+                    url: "/api/role/" + roleId,
                     type: "delete",
                     success: function (data) {
                         if (data.status == 200) {

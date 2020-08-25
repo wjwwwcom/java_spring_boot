@@ -5039,10 +5039,10 @@ $(document).ready(function () {
 });
 
 //============
-/*
+
 function initRoles(rolesDivId, roleElementName) {
     $.ajax({
-        url : "/cpi/roles",
+        url : "/api/roles",
         type : "get",
         success : function (rs) {
             var rolesDiv = $("#" + rolesDivId);
@@ -5057,4 +5057,4 @@ function initRoles(rolesDivId, roleElementName) {
         }
     });
 }
-*/
+

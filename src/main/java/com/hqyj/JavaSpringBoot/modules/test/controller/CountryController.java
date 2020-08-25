@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
  *Country控制类
  */
 @RestController
-@RequestMapping("/cpi")
+@RequestMapping("/api")
 public class CountryController {
 
     @Autowired

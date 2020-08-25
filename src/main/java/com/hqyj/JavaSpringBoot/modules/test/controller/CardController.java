@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/cpi")
+@RequestMapping("/api")
 public class CardController {
     @Autowired
     private CardService cardService;

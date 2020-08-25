@@ -70,7 +70,7 @@
         user.rememberMe = $("[name=rememberMe]").prop("checked")
 
         $.ajax({
-            url : "/cpi/login",
+            url : "/api/login",
             type : "post",
             contentType: "application/json",
             data : JSON.stringify(user),
