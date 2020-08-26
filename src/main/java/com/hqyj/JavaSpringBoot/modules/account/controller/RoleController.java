@@ -7,6 +7,7 @@ import com.hqyj.JavaSpringBoot.modules.account.entity.User;
 import com.hqyj.JavaSpringBoot.modules.account.service.RoleService;
 import com.hqyj.JavaSpringBoot.modules.common.vo.Result;
 import com.hqyj.JavaSpringBoot.modules.common.vo.SearchVo;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -37,16 +38,19 @@ public class RoleController {
     }
 
     @PostMapping(value = "/role", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequiresPermissions(value = "/role/insert")
     public Result<Role> insertUser(@RequestBody Role role) {
         return roleService.insertRole(role);
     }
 
     @PutMapping(value = "/role", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequiresPermissions(value = "/role/update")
     public Result<Role> updateRole(@RequestBody Role role) {
         return roleService.updateRole(role);
     }
 
     @DeleteMapping("/role/{roleId}")
+    @RequiresPermissions(value = "/role/delete")
     public Result<Object> deleteRoleByRoleId(@PathVariable int roleId) {
         return roleService.deleteRoleByRoleId(roleId);
     }

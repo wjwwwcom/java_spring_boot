@@ -280,7 +280,7 @@
                 if (rs.status == 200) {
                     initUserTable(DEFAULT_PAGE_SIZE);
                 } else {
-                    layer.alert(rs.messgae, {icon: 0});
+                    window.location.href =rs.object;
                 }
             },
             error: function (data) {
@@ -299,8 +299,8 @@
                         if (data.status == 200) {
                             initUserTable(DEFAULT_PAGE_SIZE);
                         } else {
-                            // window.location.href = data.object;
-                            layer.msg(data.message, {icon: 0});
+                            window.location.href = data.object;
+                           // layer.msg(data.message, {icon: 0});
                         }
                     },
                     error: function (data) {

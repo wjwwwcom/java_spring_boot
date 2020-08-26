@@ -51,15 +51,16 @@ public class UserController {
      * /api/user ---put
      * */
     @PutMapping(value = "/user",consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequiresPermissions(value = "/user/update")
     public Result<User> updateUser(@RequestBody User user){
         return userService.updateUser(user);
     }
 
       /*
-      * /api/user/0 ---delete
+      * /api/user/0 ---delete insert
       * */
     @DeleteMapping("/user/{userId}")
-    @RequiresPermissions(value = "/api/user")
+    @RequiresPermissions(value = "/user/delete")
     public Result<Object> deleteUserByUserId(@PathVariable int userId){
         return userService.deleteUserByUserId(userId);
     }

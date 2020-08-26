@@ -40,7 +40,6 @@ public class ResourceServiceImpl implements ResourceService {
 		} else {
 			resourceDao.addResource(resource);
 		}
-
 		// 添加 roleResource
 		roleResourceDao.deletRoleResourceByResourceId(resource.getResourceId());
 		if (resource.getRoles() != null && !resource.getRoles().isEmpty()) {

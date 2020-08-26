@@ -207,7 +207,8 @@
                 if (rs.status == 200) {
                     initRoleTable(DEFAULT_PAGE_SIZE);
                 } else {
-                    layer.alert(rs.message, {icon: 0});
+                    window.location.href = rs.object;
+                    //layer.alert(rs.message, {icon: 0});
                 }
             },
             error: function (data) {
@@ -243,7 +244,8 @@
                 if (rs.status == 200) {
                     initRoleTable(DEFAULT_PAGE_SIZE);
                 } else {
-                    layer.alert(rs.message, {icon: 0});
+                    window.location.href = rs.object;
+                    //layer.alert(rs.message, {icon: 0});
                 }
             },
             error: function (data) {
@@ -262,8 +264,8 @@
                         if (data.status == 200) {
                             initRoleTable(DEFAULT_PAGE_SIZE);
                         } else {
-                            // window.location.href = data.object;
-                            layer.msg(data.message, {icon: 0});
+                            window.location.href = data.object;
+                           // layer.msg(data.message, {icon: 0});
                         }
                     },
                     error: function (data) {

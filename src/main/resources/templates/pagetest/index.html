@@ -1,4 +1,45 @@
+
 <div class="right_col" role="main">
+    <div id="vueTest">
+     <h3>文本绑定</h3>
+        <div>{{title}}</div>
+        <h3>属性绑定----单向绑定model to view</h3>
+        User name:<input type="text" v-bind:value="userName"><br>
+        Password:<input type="text" v-bind:value="password"><br>
+        <h3>属性绑定----双向绑定 model <=> view</h3>
+        Email:<input type="text" v-model="email"><br>
+        Step:<input type="text" v-model="step"><br>
+        <h3>事件绑定</h3>
+        test_1:<input type="button" v-on:click="test_1()" value="test_1"><br>
+        test_2:<input type="button" @click="test_2()" value="test_2"><br>
+    </div>
+    <script>
+        var  vueTest = new Vue({
+            el:"#vueTest",
+            data:{
+                title:"Vue Test",
+                userName:"Hywang",
+                password:"111111",
+                email:"wangwu@163.com",
+                step:1,
+                total:0,
+            },
+            methods:{
+                test_1:function(){
+                    alert(this.userName+this.password);
+                    this.userName="wuwuwu";
+                    this.password="222222";
+
+                },
+                test_2:function () {
+                    alert(this.email+this.step)
+                    this.totel=this.totel+this.step;
+                }
+
+            }
+        });
+    </script>
+    <hr>
     <h3>file upload and downlod</h3>
     <a href="/pagetest/downloadfile?fileName=tupian.png">download file</a>
 
