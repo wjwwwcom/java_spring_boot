@@ -119,8 +119,42 @@
 
 四、编程题（每题10分，共20分）
 	1、提供一个接口，返回 List<User> 列表，对该列表进行排序、保留10条数据；页面端使用 ajax post 方式提交请求，包装查询参数，获取接口返回数据，并遍历数据渲染到页面上 table 表格中；
-                                        
-	
+
+            PostMapping(value="/api/users")
+            public List<User> getUsersBySearchVo(List<Uer> list,ModelMap map) {
+            for(int i=0;i<10;i++){
+              list.add(UserService.GetUser().get(i));
+            }
+               map.addAllAttributes("data",list);
+                return "index";
+            }
+
+
+            页面端：
+    function showing() {
+        //发送ajaxj请求
+        $.ajax({
+            url:"${pageContext.request.contextPath}/api/user",//请求地址
+            type:"post",
+            data:use,
+            dataType:"json",
+            success:function (data) {
+                var html="";
+                for(var i=0;i<data.length;i++){
+                    html+="<tr>" +
+                        "<td class='text-center'>"+data[i].userId+"</td>" +
+                        "<td class='text-center'>"+data[i].userName+"</td>" +
+                        "<td class='text-center' >"+data[i].password+"</td>" +
+                        "</tr>"
+                }
+                //把拼接的html变量信息显示在id=tb的标签上
+                $("#tb").html(html)
+            },
+            error:function(data){
+                //响应失败需要的做的事情
+            }
+        })
+	}
 	2、设计一套购物车接口，以 Cookie 或者 redis 实现
                     Cookie方法： 通过把购物车中的商品数据写入Cookie中,再通过浏览器进行读取，缺点：数据不易保存易丢失
 
