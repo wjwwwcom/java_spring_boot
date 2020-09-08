@@ -89,7 +89,7 @@
        += ，是将两个list相加，会返回到一个新的list对象。append列表增加元素的操作，没有返回值，是直接修改了原数据对象。
 
 	使用bs4解析响应内容，获取某div（class为aaa）下所有span节点；
-        find_all(name="div", attrs={"class": "aaa"})
+        find_all(name="div", attrs={"class": "aaa"}).find_all( name="span")
 	简述Django操作流程、组件的作用；
          用户通过浏览器向我们的服务器发起一个请求（request），请求会去访问视图函数，如果不涉及到数据调用，
          那么视图函数直接返回一个模板（页面）给用户，反之，视图函数调用模型进行数据处理，并填充到模版中返回给用户；
